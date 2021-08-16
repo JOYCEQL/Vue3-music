@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-07-02 10:48:58
- * @LastEditTime: 2021-07-03 22:51:48
+ * @LastEditTime: 2021-07-20 15:25:21
  * @LastEditors: yuguangzhou
  * @Description: 滚动
  */
@@ -25,9 +25,11 @@ export default function useScroll (wrapperRef, options, emit) {
       })
     }
   })
+
   // 销毁实例
   onUnmounted(() => {
-    scroll.value.destory()
+    scroll.value.destroy()
   })
+
   return scroll
 }

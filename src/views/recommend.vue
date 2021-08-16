@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-20 11:57:07
- * @LastEditTime: 2021-07-05 16:27:09
+ * @LastEditTime: 2021-08-13 14:55:27
  * @LastEditors: yuguangzhou
  * @Description:推荐
 -->
@@ -83,7 +83,7 @@ export default {
 .recommend{
     position: fixed;
     width: 100%;
-    top: 88px;
+    top: 50px;
     bottom: 0;
 }
 .recommend-content{
