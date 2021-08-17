@@ -15,7 +15,7 @@
 import MusicList from '@/components/music-list/MusicList'
 import { getSingerDetail } from '@/api/singer'
 import { processSongs } from '@/api/song'
-import { getSessionstorgae } from '@/utils/storage'
+import { getStorage } from '@/utils/storage'
 export default {
   name: 'SingerDetail',
   props: {
@@ -49,7 +49,7 @@ export default {
       if (data) {
         retData = data
       } else {
-        retData = getSessionstorgae('singer')
+        retData = getStorage('singer')
       }
       return retData
     },

@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-08-08 14:29:02
- * @LastEditTime: 2021-08-12 11:27:47
+ * @LastEditTime: 2021-08-17 15:52:39
  * @LastEditors: yuguangzhou
  * @Description:state
  */
@@ -15,7 +15,8 @@ const state = {
   playMode: PLAY_MODE.sequence,
   playing: false,
   currentIndex: 0,
-  fullScreen: false
+  fullScreen: false,
+  favoriteList: []
 }
 
 export default state

@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-08-12 10:52:26
- * @LastEditTime: 2021-08-13 16:33:33
+ * @LastEditTime: 2021-08-17 15:50:40
  * @LastEditors: yuguangzhou
  * @Description:播放器组件
 -->
@@ -52,7 +52,8 @@
               <!-- <collection-records theme="outline" size="30" fill="#3a5de7"/> -->
               <!-- <like theme="two-tone" size="30" :fill="['#2F88FF' ,'#2F88FF']"/> -->
               <!-- <like theme="two-tone" size="30" fill="#2F88FF"/> -->
-              <like theme="outline" size="30" fill="#3a5de7"/>
+              <like @click="handleFavorite(currentSong)" theme="outline" size="30" fill="#3a5de7" v-if="!getFavoriteStatus(currentSong)" />
+              <like @click="handleFavorite(currentSong)" theme="filled" size="30" fill="#3a5de7" v-else />
             </div>
           </div>
         </div>
@@ -71,6 +72,7 @@ import { useStore } from 'vuex'
 import { computed, ref, watch } from 'vue'
 import useMode from '@/hooks/use-mode'
 import { PLAY_MODE } from '@/assets/js/constant'
+import useFavorite from '@/hooks/use-favorite'
 export default {
   name: 'Player',
   setup () {
@@ -86,7 +88,6 @@ export default {
     const playList = computed(() => store.state.playList)
     const currentIndex = computed(() => store.state.currentIndex)
     const playMode = computed(() => store.state.playMode)
-
     // computed
     // const playClass = computed(() => {
     //   return playing.value ? 'icon-pause' : 'icon-play'
@@ -180,6 +181,7 @@ export default {
 
     // hooks
     const { modeIcon, handleMode } = useMode()
+    const { handleFavorite, getFavoriteStatus } = useFavorite()
 
     return {
       audioRef,
@@ -191,15 +193,18 @@ export default {
       playMode,
       disableCls,
       goBack,
-      handleMode,
-      modeIcon,
       togglePlay,
       handlePrev,
       handleNext,
       loop,
       ready,
       pause,
-      end
+      end,
+      // hooks
+      handleMode,
+      modeIcon,
+      handleFavorite,
+      getFavoriteStatus
     }
   }
 }

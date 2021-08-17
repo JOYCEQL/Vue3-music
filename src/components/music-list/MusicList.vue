@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-07-19 20:04:42
- * @LastEditTime: 2021-08-13 14:42:41
+ * @LastEditTime: 2021-08-16 14:16:43
  * @LastEditors: yuguangzhou
  * @Description: 音乐列表
 -->
@@ -57,7 +57,10 @@
 import Scroll from '@/components/base/Scroll'
 import SongList from '@/components/base/SongList'
 import { mapActions } from 'vuex'
+
+// 使用vw适配的情况下,这个值失去意义，不会根据屏幕大小变化，导致其他显示Bug
 const RESERVED_HEIGHT = 40
+
 export default {
   components: {
     Scroll,

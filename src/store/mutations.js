@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-08-08 14:29:27
- * @LastEditTime: 2021-08-12 11:28:59
+ * @LastEditTime: 2021-08-17 15:48:16
  * @LastEditors: yuguangzhou
  * @Description:
  */
@@ -23,6 +23,9 @@ const mutations = {
   },
   setFullScreen (state, fullScreen) {
     state.fullScreen = fullScreen
+  },
+  setFavoriteList (state, list) {
+    state.favoriteList = list
   }
 }
 
