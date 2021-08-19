@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-07-03 19:14:02
- * @LastEditTime: 2021-08-17 15:59:32
+ * @LastEditTime: 2021-08-18 10:10:20
  * @LastEditors: yuguangzhou
  * @Description: 收藏喜爱名单
  */
@@ -15,7 +15,6 @@ export default function useFavorite () {
   const favoriteList = computed(() => store.state.favoriteList)
 
   const getFavoriteStatus = (song) => {
-    console.log(!!isFavorite(song))
     return !!isFavorite(song)
   }
   const handleFavorite = (song) => {

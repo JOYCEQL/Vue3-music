@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-06-09 21:35:41
- * @LastEditTime: 2021-07-05 21:20:44
+ * @LastEditTime: 2021-08-18 15:55:22
  * @LastEditors: yuguangzhou
  * @Description: 路由文件
  */
@@ -26,7 +26,10 @@ const routes = [
     children: [
       {
         path: ':id',
-        component: SingerDetail
+        component: SingerDetail,
+        meta: {
+          showFoot: false
+        }
       }
     ]
   },

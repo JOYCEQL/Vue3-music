@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-08-12 10:52:26
- * @LastEditTime: 2021-08-17 15:50:40
+ * @LastEditTime: 2021-08-18 12:00:06
  * @LastEditors: yuguangzhou
  * @Description:播放器组件
 -->
@@ -16,6 +16,7 @@
         <div class="background">
           <img :src="currentSong.pic">
         </div>
+        <!-- 标题 -->
         <div class="top">
           <div
             class="back"
@@ -26,7 +27,43 @@
           <h1 class="title">{{currentSong.name}}</h1>
           <h2 class="subtitle">{{currentSong.singer}}</h2>
         </div>
+        <!-- cd & 歌词 -->
+          <div
+          class="middle"
+        >
+          <div
+            class="middle-l"
+          >
+            <div
+              ref="cdWrapperRef"
+              class="cd-wrapper"
+            >
+              <div
+                ref="cdRef"
+                class="cd"
+              >
+                <img
+                  ref="cdImageRef"
+                  class="image"
+                  :src="currentSong.pic">
+              </div>
+            </div>
+          </div>
+        </div>
+          <!-- 进度条 & 操作区 -->
         <div class="bottom">
+          <div class="progress-wrapper">
+            <span class="time time-l">{{formatTime(currentTime)}}</span>
+            <div class="progress-bar-wrapper">
+              <process-bar
+                ref="barRef"
+                :progress="progress"
+                @progress-changing="onProgressChanging"
+                @progress-changed="onProgressChanged"
+              ></process-bar>
+            </div>
+            <span class="time time-r">{{formatTime(currentSong.duration)}}</span>
+          </div>
           <div class="operators">
             <div class="icon i-left">
               <play-once @click="handleMode"   v-if="playMode===PLAY_MOD.loop"  theme="outline" size="30" fill="#3a5de7"/>
@@ -62,6 +99,7 @@
       ref="audioRef"
       @canplay="ready"
       @pause="pause"
+      @timeupdate="updateTime"
       @ended="end"
     ></audio>
   </div>
@@ -73,13 +111,20 @@ import { computed, ref, watch } from 'vue'
 import useMode from '@/hooks/use-mode'
 import { PLAY_MODE } from '@/assets/js/constant'
 import useFavorite from '@/hooks/use-favorite'
+import ProcessBar from './ProcessBar'
+import { formatTime } from '@/utils/date-format'
 export default {
   name: 'Player',
+  components: {
+    ProcessBar
+  },
   setup () {
     // data
     const audioRef = ref(null)
     const PLAY_MOD = PLAY_MODE
     const songReady = ref(false)
+    const currentTime = ref(0)
+    let progressChanging = false
     // vuex
     const store = useStore()
     const fullScreen = computed(() => store.state.fullScreen)
@@ -179,6 +224,29 @@ export default {
       store.commit('setFullScreen', false)
     }
 
+    // 进度占比--音乐时间变化，触发progress变化，process-bar变化
+    const progress = computed(() => {
+      return currentTime.value / currentSong.value.duration
+    })
+    const updateTime = (e) => {
+      if (!progressChanging) {
+        currentTime.value = e.target.currentTime
+      }
+    }
+
+    const onProgressChanging = (progress) => {
+      progressChanging = true
+      currentTime.value = currentSong.value.duration * progress
+    }
+
+    function onProgressChanged (progress) {
+      progressChanging = false
+      audioRef.value.currentTime = currentTime.value = currentSong.value.duration * progress
+      if (!playing.value) {
+        store.commit('setPlayingState', true)
+      }
+    }
+
     // hooks
     const { modeIcon, handleMode } = useMode()
     const { handleFavorite, getFavoriteStatus } = useFavorite()
@@ -192,6 +260,7 @@ export default {
       playing,
       playMode,
       disableCls,
+      // methods
       goBack,
       togglePlay,
       handlePrev,
@@ -200,11 +269,18 @@ export default {
       ready,
       pause,
       end,
+      progress,
+      updateTime,
+      onProgressChanging,
+      onProgressChanged,
+      currentTime,
       // hooks
       handleMode,
       modeIcon,
       handleFavorite,
-      getFavoriteStatus
+      getFavoriteStatus,
+      // utils
+      formatTime
     }
   }
 }
