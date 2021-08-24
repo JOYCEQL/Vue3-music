@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-20 11:57:07
- * @LastEditTime: 2021-08-13 14:55:27
+ * @LastEditTime: 2021-08-19 15:17:10
  * @LastEditors: yuguangzhou
  * @Description:推荐
 -->
@@ -47,7 +47,7 @@ import Scroll from '@/components/base/Scroll'
 import { reactive, onMounted, toRefs, computed } from 'vue'
 import { getRecommend } from '@/api/recommend'
 export default {
-  name: '',
+  name: 'Recommend',
   components: {
     Scroll
   },

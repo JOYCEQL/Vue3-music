@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-08-12 10:52:26
- * @LastEditTime: 2021-08-18 12:00:06
+ * @LastEditTime: 2021-08-24 22:03:12
  * @LastEditors: yuguangzhou
  * @Description:播放器组件
 -->
@@ -42,9 +42,11 @@
                 ref="cdRef"
                 class="cd"
               >
+            <!-- 动态添加旋转类名 -->
                 <img
                   ref="cdImageRef"
                   class="image"
+                  :class="cdClass"
                   :src="currentSong.pic">
               </div>
             </div>
@@ -109,8 +111,9 @@
 import { useStore } from 'vuex'
 import { computed, ref, watch } from 'vue'
 import useMode from '@/hooks/use-mode'
-import { PLAY_MODE } from '@/assets/js/constant'
 import useFavorite from '@/hooks/use-favorite'
+import useCd from '@/hooks/use-cd'
+import { PLAY_MODE } from '@/assets/js/constant'
 import ProcessBar from './ProcessBar'
 import { formatTime } from '@/utils/date-format'
 export default {
@@ -250,7 +253,7 @@ export default {
     // hooks
     const { modeIcon, handleMode } = useMode()
     const { handleFavorite, getFavoriteStatus } = useFavorite()
-
+    const { cdClass, cdRef, cdImageRef } = useCd()
     return {
       audioRef,
       fullScreen,
@@ -279,8 +282,13 @@ export default {
       modeIcon,
       handleFavorite,
       getFavoriteStatus,
+      // cd
+      cdClass,
+      cdRef,
+      cdImageRef,
       // utils
       formatTime
+
     }
   }
 }
