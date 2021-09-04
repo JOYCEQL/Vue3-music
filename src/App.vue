@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-09 21:35:41
- * @LastEditTime: 2021-08-18 16:05:28
+ * @LastEditTime: 2021-08-28 14:45:27
  * @LastEditors: yuguangzhou
  * @Description:
 -->
@@ -33,5 +33,5 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 </style>

@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-07-20 14:11:50
- * @LastEditTime: 2021-07-20 14:12:22
+ * @LastEditTime: 2021-08-28 13:24:03
  * @LastEditors: yuguangzhou
  * @Description:歌曲api文件
  */
@@ -23,5 +23,31 @@ export function processSongs (songs) {
     }).filter((song) => {
       return song.url && song.url.indexOf('vkey') > -1
     })
+  })
+}
+
+/**
+ * @description 获取歌词
+ * @export
+ * @param {*} song
+ * @return {*}
+ */
+const lyricMap = {}
+export function getLyric (song) {
+  if (song.lyric) {
+    return Promise.resolve(song.lyric)
+  }
+  const mid = song.mid
+  const lyric = lyricMap[mid]
+  if (lyric) {
+    return Promise.resolve(lyric)
+  }
+
+  return get('/api/getLyric', {
+    mid
+  }).then((result) => {
+    const lyric = result ? result.lyric : '[00:00:00]该歌曲暂时无法获取歌词'
+    lyricMap[mid] = lyric
+    return lyric
   })
 }

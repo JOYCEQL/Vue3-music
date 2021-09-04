@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-08-12 10:52:26
- * @LastEditTime: 2021-08-24 22:03:12
+ * @LastEditTime: 2021-09-02 22:05:32
  * @LastEditors: yuguangzhou
  * @Description:播放器组件
 -->
@@ -27,12 +27,16 @@
           <h1 class="title">{{currentSong.name}}</h1>
           <h2 class="subtitle">{{currentSong.singer}}</h2>
         </div>
-        <!-- cd & 歌词 -->
+        <!-- cd & -->
           <div
           class="middle"
+          @touchstart.prevent="touchStart"
+          @touchmove.prevent="touchMove"
+          @touchend.prevent="touchEnd"
         >
           <div
             class="middle-l"
+            :style="cdStyle"
           >
             <div
               ref="cdWrapperRef"
@@ -50,10 +54,39 @@
                   :src="currentSong.pic">
               </div>
             </div>
+              <div class="playing-lyric-wrapper">
+              <div class="playing-lyric">{{playingLyric}}</div>
+            </div>
           </div>
+          <!-- 歌词 -->
+          <scroll
+            class="middle-r"
+            ref="lyricScrollRef"
+            :style="lyricStyle"
+          >
+            <div class="lyric-wrapper">
+              <div v-if="currentLyric" ref="lyricListRef">
+                <p
+                  class="text"
+                  :class="{'current': currentLineNum ===index}"
+                  v-for="(line,index) in currentLyric.lines"
+                  :key="line.num"
+                >
+                  {{line.txt}}
+                </p>
+              </div>
+              <div class="pure-music" v-show="pureMusicLyric">
+                <p>{{pureMusicLyric}}</p>
+              </div>
+            </div>
+          </scroll>
         </div>
           <!-- 进度条 & 操作区 -->
         <div class="bottom">
+          <div class="dot-wrapper">
+            <span class="dot" :class="{'active':currentShow==='cd'}"></span>
+            <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
+          </div>
           <div class="progress-wrapper">
             <span class="time time-l">{{formatTime(currentTime)}}</span>
             <div class="progress-bar-wrapper">
@@ -110,16 +143,20 @@
 <script>
 import { useStore } from 'vuex'
 import { computed, ref, watch } from 'vue'
+import Scroll from '@/components/base/Scroll'
 import useMode from '@/hooks/use-mode'
 import useFavorite from '@/hooks/use-favorite'
 import useCd from '@/hooks/use-cd'
+import useLyric from '@/hooks/use-lyric'
+import useToggleView from '@/hooks/use-toggleView'
 import { PLAY_MODE } from '@/assets/js/constant'
 import ProcessBar from './ProcessBar'
 import { formatTime } from '@/utils/date-format'
 export default {
   name: 'Player',
   components: {
-    ProcessBar
+    ProcessBar,
+    Scroll
   },
   setup () {
     // data
@@ -149,6 +186,11 @@ export default {
       if (!newSong.id || !newSong.url) {
         return
       }
+
+      // 防止歌词滚动bug-多处处理
+      currentTime.value = 0
+      songReady.value = false
+
       const audioEl = audioRef.value
       audioEl.src = newSong.url
       audioEl.play()
@@ -162,8 +204,10 @@ export default {
       const audioEl = audioRef.value
       if (newPlaying) {
         audioEl.play()
+        playLyric()
       } else {
         audioEl.pause()
+        stopLyric()
       }
     })
     // function
@@ -222,6 +266,7 @@ export default {
         return
       }
       songReady.value = true
+      playLyric()
     }
     const goBack = () => {
       store.commit('setFullScreen', false)
@@ -240,6 +285,9 @@ export default {
     const onProgressChanging = (progress) => {
       progressChanging = true
       currentTime.value = currentSong.value.duration * progress
+      // 同步歌词位置
+      playLyric()
+      stopLyric()
     }
 
     function onProgressChanged (progress) {
@@ -248,12 +296,16 @@ export default {
       if (!playing.value) {
         store.commit('setPlayingState', true)
       }
+      playLyric()
     }
 
     // hooks
     const { modeIcon, handleMode } = useMode()
     const { handleFavorite, getFavoriteStatus } = useFavorite()
     const { cdClass, cdRef, cdImageRef } = useCd()
+    const { currentLineNum, currentLyric, lyricScrollRef, lyricListRef, playLyric, stopLyric, pureMusicLyric, playingLyric } = useLyric({ songReady, currentTime })
+    const { currentShow, cdStyle, lyricStyle, touchStart, touchMove, touchEnd } = useToggleView()
+
     return {
       audioRef,
       fullScreen,
@@ -287,8 +339,21 @@ export default {
       cdRef,
       cdImageRef,
       // utils
-      formatTime
-
+      formatTime,
+      // lyric
+      currentLineNum,
+      currentLyric,
+      lyricListRef,
+      lyricScrollRef,
+      pureMusicLyric,
+      playingLyric,
+      // toggleView
+      currentShow,
+      cdStyle,
+      lyricStyle,
+      touchStart,
+      touchMove,
+      touchEnd
     }
   }
 }
@@ -360,6 +425,7 @@ export default {
         font-size: 0;
         .middle-l {
           display: inline-block;
+          // display: none;
           vertical-align: top;
           position: relative;
           width: 100%;

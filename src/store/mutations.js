@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-08-08 14:29:27
- * @LastEditTime: 2021-08-17 15:48:16
+ * @LastEditTime: 2021-08-28 14:06:01
  * @LastEditors: yuguangzhou
  * @Description:
  */
@@ -26,6 +26,14 @@ const mutations = {
   },
   setFavoriteList (state, list) {
     state.favoriteList = list
+  },
+  addSongLyric (state, { song, lyric }) {
+    state.sequenceList.map(item => {
+      if (item.mid === song.mid) {
+        item.lyric = lyric
+      }
+      return item
+    })
   }
 }
 
