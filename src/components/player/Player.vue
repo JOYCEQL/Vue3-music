@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-08-12 10:52:26
- * @LastEditTime: 2021-09-02 22:05:32
+ * @LastEditTime: 2021-09-04 15:14:33
  * @LastEditors: yuguangzhou
  * @Description:播放器组件
 -->
@@ -30,10 +30,9 @@
         <!-- cd & -->
           <div
           class="middle"
-          @touchstart.prevent="touchStart"
-          @touchmove.prevent="touchMove"
-          @touchend.prevent="touchEnd"
+          @click.prevent="toggleView"
         >
+
           <div
             class="middle-l"
             :style="cdStyle"
@@ -83,10 +82,10 @@
         </div>
           <!-- 进度条 & 操作区 -->
         <div class="bottom">
-          <div class="dot-wrapper">
+          <!-- <div class="dot-wrapper">
             <span class="dot" :class="{'active':currentShow==='cd'}"></span>
             <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
-          </div>
+          </div> -->
           <div class="progress-wrapper">
             <span class="time time-l">{{formatTime(currentTime)}}</span>
             <div class="progress-bar-wrapper">
@@ -148,7 +147,6 @@ import useMode from '@/hooks/use-mode'
 import useFavorite from '@/hooks/use-favorite'
 import useCd from '@/hooks/use-cd'
 import useLyric from '@/hooks/use-lyric'
-import useToggleView from '@/hooks/use-toggleView'
 import { PLAY_MODE } from '@/assets/js/constant'
 import ProcessBar from './ProcessBar'
 import { formatTime } from '@/utils/date-format'
@@ -164,6 +162,7 @@ export default {
     const PLAY_MOD = PLAY_MODE
     const songReady = ref(false)
     const currentTime = ref(0)
+    const currentShow = ref('cd')
     let progressChanging = false
     // vuex
     const store = useStore()
@@ -174,11 +173,16 @@ export default {
     const currentIndex = computed(() => store.state.currentIndex)
     const playMode = computed(() => store.state.playMode)
     // computed
-    // const playClass = computed(() => {
-    //   return playing.value ? 'icon-pause' : 'icon-play'
-    // })
+
     const disableCls = computed(() => {
       return songReady.value ? '' : 'disable'
+    })
+
+    const cdStyle = computed(() => {
+      return currentShow.value === 'cd' ? 'opacity:1;' : 'opacity:0'
+    })
+    const lyricStyle = computed(() => {
+      return currentShow.value === 'lyric' ? 'opacity:1;' : 'opacity:0'
     })
 
     // watch
@@ -191,6 +195,7 @@ export default {
       currentTime.value = 0
       songReady.value = false
 
+      currentShow.value = 'cd'
       const audioEl = audioRef.value
       audioEl.src = newSong.url
       audioEl.play()
@@ -299,13 +304,20 @@ export default {
       playLyric()
     }
 
+    // cd&lyric
+    const toggleView = () => {
+      if (currentShow.value === 'cd') {
+        currentShow.value = 'lyric'
+      } else {
+        currentShow.value = 'cd'
+      }
+    }
+
     // hooks
     const { modeIcon, handleMode } = useMode()
     const { handleFavorite, getFavoriteStatus } = useFavorite()
     const { cdClass, cdRef, cdImageRef } = useCd()
     const { currentLineNum, currentLyric, lyricScrollRef, lyricListRef, playLyric, stopLyric, pureMusicLyric, playingLyric } = useLyric({ songReady, currentTime })
-    const { currentShow, cdStyle, lyricStyle, touchStart, touchMove, touchEnd } = useToggleView()
-
     return {
       audioRef,
       fullScreen,
@@ -347,13 +359,10 @@ export default {
       lyricScrollRef,
       pureMusicLyric,
       playingLyric,
-      // toggleView
       currentShow,
+      toggleView,
       cdStyle,
-      lyricStyle,
-      touchStart,
-      touchMove,
-      touchEnd
+      lyricStyle
     }
   }
 }
@@ -471,7 +480,8 @@ export default {
           }
         }
         .middle-r {
-          display: inline-block;
+          position: absolute;
+          top:0;
           vertical-align: top;
           width: 100%;
           height: 100%;
