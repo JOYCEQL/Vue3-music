@@ -1,13 +1,14 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-08-12 10:52:26
- * @LastEditTime: 2021-09-04 15:14:33
+ * @LastEditTime: 2021-09-12 15:57:37
  * @LastEditors: yuguangzhou
  * @Description:播放器组件
 -->
 <template>
    <div
     class="player"
+    v-show="playList.length"
   >
       <div
         class="normal-player"
@@ -82,10 +83,6 @@
         </div>
           <!-- 进度条 & 操作区 -->
         <div class="bottom">
-          <!-- <div class="dot-wrapper">
-            <span class="dot" :class="{'active':currentShow==='cd'}"></span>
-            <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
-          </div> -->
           <div class="progress-wrapper">
             <span class="time time-l">{{formatTime(currentTime)}}</span>
             <div class="progress-bar-wrapper">
@@ -103,32 +100,25 @@
               <play-once @click="handleMode"   v-if="playMode===PLAY_MOD.loop"  theme="outline" size="30" fill="#3a5de7"/>
               <play-cycle @click="handleMode"  v-if="playMode===PLAY_MOD.sequence"  theme="outline" size="30" fill="#3a5de7"/>
               <shuffle-one @click="handleMode" v-if="playMode===PLAY_MOD.random"  theme="outline" size="30" fill="#3a5de7"/>
-              <!-- <i @click="handleMode" :class="modeIcon"></i> -->
             </div>
             <div class="icon i-left" :class="disableCls" >
-              <!-- <i @click="handlePrev" class="icon-prev"></i> -->
               <go-start @click="handlePrev" theme="filled" size="30" fill="#3a5de7"/>
             </div>
             <div class="icon i-center"  :class="disableCls">
-              <!-- <i @click="togglePlay" :class="playClass"></i> -->
               <play @click="togglePlay" theme="filled" size="60" fill="#3a5de7" v-if="!playing" />
               <pause-one @click="togglePlay" theme="filled" size="60" fill="#3a5de7" v-else />
             </div>
             <div class="icon i-right"  :class="disableCls">
-              <!-- <i @click="handleNext"  class="icon-next"></i> -->
               <go-end @click="handleNext"  theme="filled" size="30" fill="#3a5de7"/>
             </div>
             <div class="icon i-right">
-              <!-- <i class="icon-not-favorite"></i> -->
-              <!-- <collection-records theme="outline" size="30" fill="#3a5de7"/> -->
-              <!-- <like theme="two-tone" size="30" :fill="['#2F88FF' ,'#2F88FF']"/> -->
-              <!-- <like theme="two-tone" size="30" fill="#2F88FF"/> -->
               <like @click="handleFavorite(currentSong)" theme="outline" size="30" fill="#3a5de7" v-if="!getFavoriteStatus(currentSong)" />
               <like @click="handleFavorite(currentSong)" theme="filled" size="30" fill="#3a5de7" v-else />
             </div>
           </div>
         </div>
       </div>
+      <mini-player :progress="progress" :toggle-play="togglePlay"></mini-player>
     <audio
       ref="audioRef"
       @canplay="ready"
@@ -141,24 +131,27 @@
 
 <script>
 import { useStore } from 'vuex'
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import Scroll from '@/components/base/Scroll'
+import ProcessBar from './ProcessBar'
+import MiniPlayer from './MiniPlayer'
 import useMode from '@/hooks/use-mode'
 import useFavorite from '@/hooks/use-favorite'
 import useCd from '@/hooks/use-cd'
 import useLyric from '@/hooks/use-lyric'
 import { PLAY_MODE } from '@/assets/js/constant'
-import ProcessBar from './ProcessBar'
 import { formatTime } from '@/utils/date-format'
 export default {
   name: 'Player',
   components: {
     ProcessBar,
-    Scroll
+    Scroll,
+    MiniPlayer
   },
   setup () {
     // data
     const audioRef = ref(null)
+    const barRef = ref(null)
     const PLAY_MOD = PLAY_MODE
     const songReady = ref(false)
     const currentTime = ref(0)
@@ -215,6 +208,16 @@ export default {
         stopLyric()
       }
     })
+
+    watch(fullScreen, async newFullScreen => {
+      if (newFullScreen) {
+        await nextTick()
+        barRef.value.setOffset(progress.value)
+      }
+    })
+
+    // 修改fullscreen引起的进度条bug
+
     // function
     const togglePlay = () => {
       if (!songReady.value) {
@@ -320,6 +323,8 @@ export default {
     const { currentLineNum, currentLyric, lyricScrollRef, lyricListRef, playLyric, stopLyric, pureMusicLyric, playingLyric } = useLyric({ songReady, currentTime })
     return {
       audioRef,
+      barRef,
+      playList,
       fullScreen,
       currentSong,
       PLAY_MOD,
@@ -359,6 +364,7 @@ export default {
       lyricScrollRef,
       pureMusicLyric,
       playingLyric,
+      // toggleView
       currentShow,
       toggleView,
       cdStyle,

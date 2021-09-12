@@ -1,31 +1,111 @@
-<!--
- * @Author: yuguangzhou
- * @Date: 2021-06-20 11:57:55
- * @LastEditTime: 2021-06-20 12:01:49
- * @LastEditors: yuguangzhou
- * @Description: 排行
--->
 <template>
-  <div class="top-list">
-    排行
+  <div class="top-list" v-loading="loading">
+    <scroll class="top-list-content">
+      <ul>
+        <li
+          class="item"
+          v-for="item in topList"
+          :key="item.id"
+          @click="selectItem(item)"
+        >
+          <div class="icon">
+            <img
+              width="100"
+              height="100"
+              :src="item.pic"
+            />
+          </div>
+          <ul class="song-list">
+            <li
+              class="song"
+              v-for="(song, index) in item.songList"
+              :key="song.id">
+              <span>{{index + 1}}. </span>
+              <span>{{song.songName}}-{{song.singerName}}</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </scroll>
+    <router-view v-slot="{ Component }">
+      <transition appear name="slide">
+        <component :is="Component" :data="selectedTop"/>
+      </transition>
+    </router-view>
   </div>
 </template>
 
 <script>
-import { reactive } from 'vue'
-export default {
-  name: 'TopList',
-  components: {},
-  setup () {
-    const data = reactive({
+import Scroll from '@/components/base/Scroll'
+import { getTopList } from '@/api/top-list'
 
-    })
+export default {
+  name: 'top-list',
+  components: {
+    Scroll
+  },
+  data () {
     return {
-      data
+      topList: [],
+      loading: true,
+      selectedTop: null
     }
+  },
+  async created () {
+    const result = await getTopList()
+    this.topList = result.topList
+    this.loading = false
+  },
+  methods: {
+    selectItem (top) {
+      this.selectedTop = top
+      this.$router.push({
+        path: `/top-list/${top.id}`
+      })
+    }
+
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+  .top-list {
+    position: fixed;
+    width: 100%;
+    top: 50px;
+    bottom: 0;
+    .top-list-content {
+      height: 100%;
+      overflow: hidden;
+      .item {
+        display: flex;
+        margin: 20px;
+        height: 100px;
+        &:last-child {
+          padding-bottom: 20px;
+        }
+        .icon {
+          flex: 0 0 100px;
+          width: 100px;
+          height: 100px;
+        }
+        .song-list {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 20px;
+          height: 100px;
+          overflow: hidden;
+          background: $color-highlight-background;
+          color: $color-text-d;
+          font-size: $font-size-small;
+          .song {
+            @include no-wrap();
+            line-height: 26px;
+          }
+        }
+      }
+    }
+  }
 </style>
