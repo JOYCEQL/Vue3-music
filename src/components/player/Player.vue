@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-08-12 10:52:26
- * @LastEditTime: 2021-09-12 15:57:37
+ * @LastEditTime: 2021-09-20 13:40:51
  * @LastEditors: yuguangzhou
  * @Description:播放器组件
 -->
@@ -10,6 +10,7 @@
     class="player"
     v-show="playList.length"
   >
+      <transition name="normal">
       <div
         class="normal-player"
         v-show="fullScreen"
@@ -31,6 +32,9 @@
         <!-- cd & -->
           <div
           class="middle"
+          @touchstart="onTouchStart"
+          @touchmove="onTouchMove"
+          @touchend="onTouchEnd"
           @click.prevent="toggleView"
         >
 
@@ -118,6 +122,7 @@
           </div>
         </div>
       </div>
+        </transition>
       <mini-player :progress="progress" :toggle-play="togglePlay"></mini-player>
     <audio
       ref="audioRef"
@@ -132,13 +137,16 @@
 <script>
 import { useStore } from 'vuex'
 import { computed, nextTick, ref, watch } from 'vue'
+
 import Scroll from '@/components/base/Scroll'
 import ProcessBar from './ProcessBar'
 import MiniPlayer from './MiniPlayer'
+
 import useMode from '@/hooks/use-mode'
 import useFavorite from '@/hooks/use-favorite'
 import useCd from '@/hooks/use-cd'
 import useLyric from '@/hooks/use-lyric'
+import useChange from '@/hooks/use-change'
 import { PLAY_MODE } from '@/assets/js/constant'
 import { formatTime } from '@/utils/date-format'
 export default {
@@ -321,6 +329,7 @@ export default {
     const { handleFavorite, getFavoriteStatus } = useFavorite()
     const { cdClass, cdRef, cdImageRef } = useCd()
     const { currentLineNum, currentLyric, lyricScrollRef, lyricListRef, playLyric, stopLyric, pureMusicLyric, playingLyric } = useLyric({ songReady, currentTime })
+    const { onTouchStart, onTouchMove, onTouchEnd } = useChange(handleNext, handlePrev)
     return {
       audioRef,
       barRef,
@@ -351,10 +360,14 @@ export default {
       modeIcon,
       handleFavorite,
       getFavoriteStatus,
+      onTouchStart,
+      onTouchMove,
+      onTouchEnd,
       // cd
       cdClass,
       cdRef,
       cdImageRef,
+
       // utils
       formatTime,
       // lyric
