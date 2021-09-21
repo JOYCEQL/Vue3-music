@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-09-12 09:36:16
- * @LastEditTime: 2021-09-12 19:31:09
+ * @LastEditTime: 2021-09-21 09:47:44
  * @LastEditors: yuguangzhou
  * @Description:迷你播放器
 -->
@@ -55,7 +55,7 @@
       <div class="control" @click.stop="showPlaylist">
        <music-list theme="filled" size="30" fill="#3a5de7"/>
       </div>
-      <!-- <playlist ref="playlistRef"></playlist> -->
+      <play-list ref="playlistRef"></play-list>
     </div>
   </transition>
 </template>
@@ -64,13 +64,15 @@
 import { useStore } from 'vuex'
 import { computed, ref } from 'vue'
 import useCd from '@/hooks/use-cd'
+import PlayList from './PlayList'
 import CircleBtn from './CircleBtn'
 import { useRoute } from 'vue-router'
 
 export default {
   name: 'mini-player',
   components: {
-    CircleBtn
+    CircleBtn,
+    PlayList
   },
   props: {
     progress: {

@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-16 21:37:32
- * @LastEditTime: 2021-07-05 14:09:29
+ * @LastEditTime: 2021-09-21 15:06:26
  * @LastEditors: yuguangzhou
  * @Description: 公共头部
 -->
@@ -9,9 +9,9 @@
    <div class="header">
     <span class="icon"></span>
     <!-- <h1 class="text">山水之间</h1> -->
-    <router-link class="mine" to="/user">
+    <!-- <router-link class="mine" to="/user">
       <i class="icon-mine"></i>
-    </router-link>
+    </router-link> -->
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-08-12 10:52:26
- * @LastEditTime: 2021-09-20 13:40:51
+ * @LastEditTime: 2021-09-21 14:48:37
  * @LastEditors: yuguangzhou
  * @Description:播放器组件
 -->
@@ -116,14 +116,16 @@
               <go-end @click="handleNext"  theme="filled" size="30" fill="#3a5de7"/>
             </div>
             <div class="icon i-right">
-              <like @click="handleFavorite(currentSong)" theme="outline" size="30" fill="#3a5de7" v-if="!getFavoriteStatus(currentSong)" />
-              <like @click="handleFavorite(currentSong)" theme="filled" size="30" fill="#3a5de7" v-else />
+              <!-- <like @click="handleFavorite(currentSong)" theme="outline" size="30" fill="#3a5de7" v-if="!getFavoriteStatus(currentSong)" />
+              <like @click="handleFavorite(currentSong)" theme="filled" size="30" fill="#3a5de7" v-else /> -->
+              <music-list theme="filled" size="30" fill="#3a5de7" @click="showPlaylist"/>
             </div>
           </div>
         </div>
       </div>
         </transition>
       <mini-player :progress="progress" :toggle-play="togglePlay"></mini-player>
+      <play-list ref="playlistRef"></play-list>
     <audio
       ref="audioRef"
       @canplay="ready"
@@ -141,6 +143,7 @@ import { computed, nextTick, ref, watch } from 'vue'
 import Scroll from '@/components/base/Scroll'
 import ProcessBar from './ProcessBar'
 import MiniPlayer from './MiniPlayer'
+import PlayList from './PlayList'
 
 import useMode from '@/hooks/use-mode'
 import useFavorite from '@/hooks/use-favorite'
@@ -154,10 +157,12 @@ export default {
   components: {
     ProcessBar,
     Scroll,
-    MiniPlayer
+    MiniPlayer,
+    PlayList
   },
   setup () {
     // data
+    const playlistRef = ref(null)
     const audioRef = ref(null)
     const barRef = ref(null)
     const PLAY_MOD = PLAY_MODE
@@ -305,7 +310,9 @@ export default {
       playLyric()
       stopLyric()
     }
-
+    function showPlaylist () {
+      playlistRef.value.show()
+    }
     function onProgressChanged (progress) {
       progressChanging = false
       audioRef.value.currentTime = currentTime.value = currentSong.value.duration * progress
@@ -331,6 +338,7 @@ export default {
     const { currentLineNum, currentLyric, lyricScrollRef, lyricListRef, playLyric, stopLyric, pureMusicLyric, playingLyric } = useLyric({ songReady, currentTime })
     const { onTouchStart, onTouchMove, onTouchEnd } = useChange(handleNext, handlePrev)
     return {
+      playlistRef,
       audioRef,
       barRef,
       playList,
@@ -381,7 +389,9 @@ export default {
       currentShow,
       toggleView,
       cdStyle,
-      lyricStyle
+      lyricStyle,
+      // playList
+      showPlaylist
     }
   }
 }
