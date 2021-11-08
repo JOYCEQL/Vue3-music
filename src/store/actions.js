@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-08-08 14:30:24
- * @LastEditTime: 2021-09-21 14:25:19
+ * @LastEditTime: 2021-10-31 19:14:37
  * @LastEditors: yuguangzhou
  * @Description: 提交mutation
  */
@@ -72,4 +72,15 @@ function findIndex (list, song) {
   return list.findIndex((item) => {
     return item.id === song.id
   })
+}
+/**
+ * @description 清空歌曲列表
+ * @export
+ * @param {*} { commit }
+ */
+export function clearSongList ({ commit }) {
+  commit('setSequenceList', [])
+  commit('setPlayList', [])
+  commit('setCurrentIndex', 0)
+  commit('setPlayingState', false)
 }

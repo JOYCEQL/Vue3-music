@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-09-21 09:41:55
- * @LastEditTime: 2021-09-21 15:02:17
+ * @LastEditTime: 2021-10-31 11:38:07
  * @LastEditors: yuguangzhou
  * @Description:
 -->
@@ -82,15 +82,19 @@
 
 <script>
 import Scroll from '@/components/base/Scroll'
+import Confirm from '@/components/base/Confirm'
+
 import { ref, computed, nextTick, watch } from 'vue'
 import { useStore } from 'vuex'
+
 import useMode from '@/hooks/use-mode'
 import useFavorite from '@/hooks/use-favorite'
 
 export default {
   name: 'playList',
   components: {
-    Scroll
+    Scroll,
+    Confirm
   },
   setup () {
     const visible = ref(false)
