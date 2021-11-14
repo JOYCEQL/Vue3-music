@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-07-03 11:14:56
- * @LastEditTime: 2021-07-05 20:07:27
+ * @LastEditTime: 2021-11-14 20:05:56
  * @LastEditors: yuguangzhou
  * @Description: 索引列表
 -->
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import Scroll from '@/components/base/Scroll'
+import Scroll from '@/components/wrap-scroll/index'
 import useFixed from '@/hooks/use-fixed'
 import useShortcut from '@/hooks/use-shortcut'
 export default {

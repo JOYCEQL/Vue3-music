@@ -1,15 +1,15 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-09 21:35:41
- * @LastEditTime: 2021-08-28 14:45:27
+ * @LastEditTime: 2021-11-14 19:27:03
  * @LastEditors: yuguangzhou
  * @Description:
 -->
 <template>
   <Header></Header>
   <!-- <tab></tab> -->
-  <router-view>
-  </router-view>
+  <router-view :style="viewStyle">
+  </router-view >
   <!-- 播放器 -->
   <tab-bar v-if="$route.meta.showFoot!==false"></tab-bar>
   <player></player>
@@ -20,12 +20,25 @@ import Header from '@/components/header/Header'
 // import Tab from '@/components/tab/Tab'
 import Player from '@/components/player/Player'
 import TabBar from '@/components/base/TabBar'
+
+import { mapState } from 'vuex'
 export default {
   components: {
     Header,
     // Tab,
     Player,
     TabBar
+  },
+  computed: {
+    viewStyle () {
+      const bottom = this.playList.length ? '110px' : '0'
+      return {
+        bottom
+      }
+    },
+    ...mapState([
+      'playList'
+    ])
   },
   created () {
   }

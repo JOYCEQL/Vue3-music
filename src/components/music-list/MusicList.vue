@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-07-19 20:04:42
- * @LastEditTime: 2021-08-16 14:16:43
+ * @LastEditTime: 2021-11-14 20:47:03
  * @LastEditors: yuguangzhou
  * @Description: 音乐列表
 -->
@@ -54,9 +54,9 @@
 </template>
 
 <script>
-import Scroll from '@/components/base/Scroll'
+import Scroll from '@/components/wrap-scroll/index'
 import SongList from '@/components/base/SongList'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 // 使用vw适配的情况下,这个值失去意义，不会根据屏幕大小变化，导致其他显示Bug
 const RESERVED_HEIGHT = 40
@@ -115,8 +115,10 @@ export default {
   computed: {
     scrollStyle () {
       // const bottom = this.playlist.length ? '60px' : '0'
+      const bottom = this.playList.length ? '60px' : '0'
       return {
-        top: `${this.imageHeight}px`
+        top: `${this.imageHeight}px`,
+        bottom
       }
     },
     bgImageStyle () {
@@ -168,7 +170,10 @@ export default {
       return {
         backdropFilter: `blur(${blur}px)`
       }
-    }
+    },
+    ...mapState([
+      'playList'
+    ])
   }
 }
 </script>
