@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-20 11:57:07
- * @LastEditTime: 2021-08-19 15:17:10
+ * @LastEditTime: 2021-11-16 21:11:24
  * @LastEditors: yuguangzhou
  * @Description:推荐
 -->
@@ -22,7 +22,7 @@
       <div class="recommend-list"  ref="list">
         <h1 class="list-title" v-show="!loading">热门歌单推荐</h1>
         <ul>
-          <li v-for="item in albums" class="item" :key="item.id">
+          <li v-for="item in albums" class="item" :key="item.id" @click="selectItem(item)">
             <div class="icon">
               <img width="60" height="60"  :src="item.pic" />
             </div>
@@ -39,13 +39,23 @@
       </div>
       </div>
     </scroll>
+    <router-view v-slot="{ Component }">
+      <transition appear name="slide">
+        <component :is="Component" :data="selecteAlbum" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
 <script>
-import Scroll from '@/components/base/Scroll'
 import { reactive, onMounted, toRefs, computed } from 'vue'
+import { useRouter } from 'vue-router'
+
+import Scroll from '@/components/base/Scroll'
 import { getRecommend } from '@/api/recommend'
+import { setStorage } from '@/utils/storage'
+
+import { ALBUM_KEY } from '@/assets/js/constant'
 export default {
   name: 'Recommend',
   components: {
@@ -56,19 +66,31 @@ export default {
       images: [],
       albums: [],
       loadingText: '正在加载,请稍等',
-      listLoading: false
+      listLoading: false,
+      selecteAlbum: []
     })
+    const router = useRouter()
     const loading = computed(() => {
       return !data.images.length && !data.albums.length
     })
+
     onMounted(async () => {
       const res = await getRecommend()
       data.images = res.sliders
       data.albums = res.albums
     })
+
+    const selectItem = (item) => {
+      setStorage(ALBUM_KEY, item)
+      data.selecteAlbum = item
+      router.push({
+        path: `/recommend/${item.id}`
+      })
+    }
     return {
+      ...toRefs(data),
       loading,
-      ...toRefs(data)
+      selectItem
     }
   }
 }

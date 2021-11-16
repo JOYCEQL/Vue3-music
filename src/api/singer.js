@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-07-03 11:24:39
- * @LastEditTime: 2021-08-16 09:16:13
+ * @LastEditTime: 2021-11-16 20:52:47
  * @LastEditors: yuguangzhou
  * @Description: 歌手tab页请求
  */
@@ -22,6 +22,6 @@ export function getSingerList () {
  */
 export function getSingerDetail (singer) {
   return get('/api/getSingerDetail', {
-    mid: singer
+    mid: singer.mid
   })
 }

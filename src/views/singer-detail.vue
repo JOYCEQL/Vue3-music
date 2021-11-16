@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-07-05 20:41:32
- * @LastEditTime: 2021-08-08 15:55:26
+ * @LastEditTime: 2021-11-16 20:35:34
  * @LastEditors: yuguangzhou
  * @Description:歌手详情
 -->
@@ -12,57 +12,12 @@
 </template>
 
 <script>
-import MusicList from '@/components/music-list/MusicList'
 import { getSingerDetail } from '@/api/singer'
-import { processSongs } from '@/api/song'
-import { getStorage } from '@/utils/storage'
-export default {
-  name: 'SingerDetail',
-  props: {
-    singer: {
-      type: Object,
-      default: () => {}
-    }
-  },
-  components: {
-    MusicList
-  },
-  data () {
-    return {
-      songs: []
-    }
-  },
-  created () {
-    this.getData()
-  },
-  mounted () {},
-  methods: {
-    async getData () {
-      const res = await getSingerDetail(this.$route.params.id)
-      this.songs = await processSongs(res.songs)
-    }
-  },
-  computed: {
-    computedData () {
-      let retData = null
-      const data = this.singer
-      if (data) {
-        retData = data
-      } else {
-        retData = getStorage('singer')
-      }
-      return retData
-    },
-    title () {
-      const data = this.computedData
-      return data && data.name
-    },
-    pic () {
-      const data = this.computedData
-      return data && data.pic
-    }
-  }
-}
+import { SINGER_KEY } from '@/assets/js/constant'
+import createDetailComponent from '@/assets/js/create-detail'
+
+export default createDetailComponent('SingerDetail', SINGER_KEY, getSingerDetail)
+
 </script>
 
 <style scoped lang="scss">

@@ -1,12 +1,13 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-06-09 21:35:41
- * @LastEditTime: 2021-09-06 15:55:39
+ * @LastEditTime: 2021-11-16 21:08:58
  * @LastEditors: yuguangzhou
  * @Description: 路由文件
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
 const Recommend = () => import('@/views/recommend'/* webpackChunkName: "recommend" */)
+const Album = () => import('@/views/album'/* webpackChunkName: "recommend" */)
 const Singer = () => import('@/views/singer'/* webpackChunkName: "singer" */)
 const TopList = () => import('@/views/top-list'/* webpackChunkName: "top-list" */)
 const TopDetail = () => import('@/views/top-detail'/* webpackChunkName: "top-list" */)
@@ -19,7 +20,16 @@ const routes = [
   },
   {
     path: '/recommend',
-    component: Recommend
+    component: Recommend,
+    children: [
+      {
+        path: ':id',
+        component: Album,
+        meta: {
+          showFoot: false
+        }
+      }
+    ]
   },
   {
     path: '/singer',

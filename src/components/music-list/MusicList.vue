@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-07-19 20:04:42
- * @LastEditTime: 2021-11-14 20:47:03
+ * @LastEditTime: 2021-11-16 20:22:32
  * @LastEditors: yuguangzhou
  * @Description: 音乐列表
 -->
@@ -115,7 +115,7 @@ export default {
   computed: {
     scrollStyle () {
       // const bottom = this.playlist.length ? '60px' : '0'
-      const bottom = this.playList.length ? '60px' : '0'
+      const bottom = this.playList.length ? '110px' : '0'
       return {
         top: `${this.imageHeight}px`,
         bottom

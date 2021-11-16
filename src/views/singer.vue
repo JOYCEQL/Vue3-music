@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-20 11:57:24
- * @LastEditTime: 2021-08-17 14:35:16
+ * @LastEditTime: 2021-11-16 20:50:59
  * @LastEditors: yuguangzhou
  * @Description:歌手
 -->
@@ -24,6 +24,7 @@
 import IndexList from '@/components/index-list/IndexList'
 import { getSingerList } from '@/api/singer'
 import { setStorage } from '@/utils/storage'
+import { SINGER_KEY } from '@/assets/js/constant'
 export default {
   name: 'Singer',
   components: { IndexList },
@@ -45,7 +46,7 @@ export default {
       this.selectedSinger = singer
 
       // 缓存歌手信息对象
-      setStorage('singer', singer)
+      setStorage(SINGER_KEY, singer)
       this.$router.push({
         path: `/singer/${singer.mid}`
       })
