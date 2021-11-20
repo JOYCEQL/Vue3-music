@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-11-16 20:26:29
- * @LastEditTime: 2021-11-16 20:48:51
+ * @LastEditTime: 2021-11-16 22:22:53
  * @LastEditors: yuguangzhou
  * @Description: 栏目/歌手详情页封装
  */
@@ -55,9 +55,7 @@ export default function createDetailComponent (name, key, fetch) {
         return
       }
       const result = await fetch(data)
-      console.log(result, 1111)
       this.songs = await processSongs(result.songs)
-      console.log(this.songs)
       this.loading = false
     }
   }

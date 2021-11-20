@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-20 11:57:07
- * @LastEditTime: 2021-11-16 21:11:24
+ * @LastEditTime: 2021-11-16 22:23:24
  * @LastEditors: yuguangzhou
  * @Description:推荐
 -->
@@ -41,7 +41,7 @@
     </scroll>
     <router-view v-slot="{ Component }">
       <transition appear name="slide">
-        <component :is="Component" :data="selecteAlbum" />
+        <component :is="Component" :data="selectAlbum" />
       </transition>
     </router-view>
   </div>
@@ -51,7 +51,7 @@
 import { reactive, onMounted, toRefs, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-import Scroll from '@/components/base/Scroll'
+import Scroll from '@/components/wrap-scroll/index'
 import { getRecommend } from '@/api/recommend'
 import { setStorage } from '@/utils/storage'
 
@@ -67,7 +67,7 @@ export default {
       albums: [],
       loadingText: '正在加载,请稍等',
       listLoading: false,
-      selecteAlbum: []
+      selectAlbum: null
     })
     const router = useRouter()
     const loading = computed(() => {
@@ -81,8 +81,8 @@ export default {
     })
 
     const selectItem = (item) => {
+      data.selectAlbum = item
       setStorage(ALBUM_KEY, item)
-      data.selecteAlbum = item
       router.push({
         path: `/recommend/${item.id}`
       })
