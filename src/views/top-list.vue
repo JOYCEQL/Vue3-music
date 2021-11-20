@@ -38,6 +38,8 @@
 <script>
 import Scroll from '@/components/base/Scroll'
 import { getTopList } from '@/api/top-list'
+import { setStorage } from '@/utils/storage'
+import { TOP_KEY } from '@/assets/js/constant'
 
 export default {
   name: 'top-list',
@@ -59,6 +61,7 @@ export default {
   methods: {
     selectItem (top) {
       this.selectedTop = top
+      setStorage(TOP_KEY, top)
       this.$router.push({
         path: `/top-list/${top.id}`
       })

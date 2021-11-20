@@ -1,25 +1,27 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-09-06 15:55:11
- * @LastEditTime: 2021-09-06 16:04:45
+ * @LastEditTime: 2021-11-20 13:13:44
  * @LastEditors: yuguangzhou
- * @Description:
+ * @Description: 排行榜详情
 -->
 <template>
  <div class="top-detail">
-    111
+      <music-list
+      :songs="songs"
+      :title="title"
+      :pic="pic"
+      :loading="loading"
+    ></music-list>
  </div>
 </template>
 
 <script>
-export default {
-  name: 'vueName',
-  data () {
-    return {
-      msg: 'Welcome to your vueName'
-    }
-  }
-}
+import { getTopDetail } from '@/api/top-list'
+import createDetailComponent from '@/assets/js/create-detail'
+import { TOP_KEY } from '@/assets/js/constant'
+
+export default createDetailComponent('TopDetail', TOP_KEY, getTopDetail)
 </script>
 
 <style scoped lang = "scss">

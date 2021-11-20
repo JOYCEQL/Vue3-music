@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-09 21:35:41
- * @LastEditTime: 2021-11-16 20:24:36
+ * @LastEditTime: 2021-11-20 13:05:23
  * @LastEditors: yuguangzhou
  * @Description:
 -->
@@ -30,9 +30,9 @@ export default {
     TabBar
   },
   computed: {
-    // 设置视图距离底部的位置
+    // 设置视图距离底部的位置,展示播放器110px，默认情况60px
     viewStyle () {
-      const bottom = this.playList.length ? '110px' : '0'
+      const bottom = this.playList.length ? '110px' : '60px'
       return {
         bottom
       }
