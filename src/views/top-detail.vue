@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-09-06 15:55:11
- * @LastEditTime: 2021-11-20 13:13:44
+ * @LastEditTime: 2021-11-20 13:26:22
  * @LastEditors: yuguangzhou
  * @Description: 排行榜详情
 -->
@@ -11,6 +11,7 @@
       :songs="songs"
       :title="title"
       :pic="pic"
+       rank
       :loading="loading"
     ></music-list>
  </div>

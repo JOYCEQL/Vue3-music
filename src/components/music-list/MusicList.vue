@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-07-19 20:04:42
- * @LastEditTime: 2021-11-16 20:22:32
+ * @LastEditTime: 2021-11-20 13:26:05
  * @LastEditors: yuguangzhou
  * @Description: 音乐列表
 -->
@@ -47,6 +47,7 @@
         <song-list
           :songs="songs"
           @select="selectItem"
+          :rank="rank"
         ></song-list>
       </div>
     </scroll>
@@ -78,7 +79,8 @@ export default {
     pic: {
       type: String,
       default: ''
-    }
+    },
+    rank: Boolean
   },
   data () {
     return {

@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-07-19 20:05:23
- * @LastEditTime: 2021-08-08 16:15:28
+ * @LastEditTime: 2021-11-20 14:03:42
  * @LastEditors: yuguangzhou
  * @Description:歌曲列表
 -->
@@ -13,6 +13,9 @@
       :key="song.id"
       @click="selectItem(song, index)"
     >
+      <div class="rank" v-if="rank">
+        <span :class="getRankCls(index)">{{ getRankText(index) }}</span>
+      </div>
       <div class="content">
         <h2 class="name">{{song.name}}</h2>
         <p class="desc">{{getDesc(song)}}</p>
@@ -29,7 +32,8 @@ export default {
       default () {
         return []
       }
-    }
+    },
+    rank: Boolean
   },
   emits: ['select'],
   data () {
@@ -49,6 +53,19 @@ export default {
     },
     selectItem (song, index) {
       this.$emit('select', { song, index })
+    },
+    // 渲染排序
+    getRankCls (index) {
+      if (index <= 2) {
+        return `icon icon${index}`
+      } else {
+        return 'text'
+      }
+    },
+    getRankText (index) {
+      if (index > 2) {
+        return index + 1
+      }
     }
   },
   computed: {
@@ -76,13 +93,13 @@ export default {
           height: 24px;
           background-size: 25px 24px;
           &.icon0 {
-            @include bg-image('first');
+            @include top-image('first');
           }
           &.icon1 {
-            @include bg-image('second');
+            @include top-image('second');
           }
           &.icon2 {
-            @include bg-image('third');
+            @include top-image('third');
           }
         }
         .text {
