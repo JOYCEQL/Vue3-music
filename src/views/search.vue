@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-20 11:57:46
- * @LastEditTime: 2021-11-24 21:57:46
+ * @LastEditTime: 2021-11-25 21:26:17
  * @LastEditors: yuguangzhou
  * @Description:搜索
 -->
@@ -34,6 +34,7 @@
              <div class="search-result" v-show="query">
             <suggest
               :query="query"
+              @select-song="selectSong"
             ></suggest>
           </div>
   </div>
@@ -66,11 +67,14 @@ export default {
     const addKey = (val) => {
       query.value = val
     }
-
+    const selectSong = (song) => {
+      console.log(song)
+    }
     return {
       query,
       hotKeys,
-      addKey
+      addKey,
+      selectSong
     }
   }
 }

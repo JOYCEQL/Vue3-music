@@ -32,10 +32,11 @@
           </p>
         </div>
       </li>
-      <!-- <div
+      <!-- 这个loading显示的位置不对,此时不应在屏幕中间，而在列表最下方-->
+      <div
         class="suggest-item"
         v-loading:[loadingText]="pullUpLoading"
-      ></div> -->
+      ></div>
     </ul>
   </div>
 </template>
@@ -44,7 +45,7 @@
 import { ref, watch, computed } from 'vue'
 import { search } from '@/api/search'
 import { processSongs } from '@/api/song'
-// import usePullUpLoad from './use-pull-up-load'
+import usePullUpLoad from '@/hooks/use-pull-up-load'
 
 export default {
   name: 'Suggest',
@@ -60,9 +61,9 @@ export default {
     const songs = ref([])
     const hasMore = ref(true)
     const page = ref(1)
-    const loadingText = ref('')
+    const loadingText = ref('加载中...')
     const noResultText = ref('抱歉，暂无搜索结果')
-    // const manualLoading = ref(false)
+    const manualLoading = ref(false)
 
     const loading = computed(() => {
       return !singer.value && !songs.value.length
@@ -72,13 +73,20 @@ export default {
       return !singer.value && !songs.value.length && !hasMore.value
     })
 
+    const pullUpLoading = computed(() => {
+      return isPullUpLoad.value && hasMore.value
+    })
+
+    const preventPullUpLoad = computed(() => {
+      return loading.value || manualLoading.value
+    })
+
     watch(() => props.query, async (newQuery) => {
       if (!newQuery) {
         return
       }
       await searchFirst()
     })
-
     async function searchFirst () {
       if (!props.query) {
         return
@@ -87,11 +95,36 @@ export default {
       songs.value = []
       singer.value = null
       hasMore.value = true
-
       const result = await search(props.query, page.value, props.showSinger)
       songs.value = await processSongs(result.songs)
       singer.value = result.singer
       hasMore.value = result.hasMore
+    }
+
+    async function searchMore () {
+      // query清空不再发送请求， 保护
+      if (!hasMore.value || !props.query) {
+        return
+      }
+      page.value++
+      const result = await search(props.query, page.value, props.showSinger)
+      songs.value = songs.value.concat(await processSongs(result.songs))
+      hasMore.value = result.hasMore
+      await enableScroll()
+    }
+
+    async function enableScroll () {
+      if (scroll.value.maxScrollY >= -1) {
+        manualLoading.value = true
+        await searchMore()
+        manualLoading.value = false
+      }
+    }
+
+    const { isPullUpLoad, rootRef, scroll } = usePullUpLoad(searchMore, preventPullUpLoad)
+
+    const selectSong = (song) => {
+      emit('select-song', song)
     }
 
     return {
@@ -100,14 +133,19 @@ export default {
       loadingText,
       noResultText,
       loading,
-      noResult
+      noResult,
+      // pullload
+      rootRef,
+      pullUpLoading,
+
+      selectSong
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .suggest {
+.suggest {
     height: 100%;
     overflow: hidden;
     .suggest-list {
