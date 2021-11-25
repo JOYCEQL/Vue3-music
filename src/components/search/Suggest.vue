@@ -99,6 +99,8 @@ export default {
       songs.value = await processSongs(result.songs)
       singer.value = result.singer
       hasMore.value = result.hasMore
+      // 查询是否有不满一屏的数据，全部渲染
+      await searchMore()
     }
 
     async function searchMore () {
