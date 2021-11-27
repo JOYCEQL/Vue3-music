@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-08-08 14:30:24
- * @LastEditTime: 2021-10-31 19:14:37
+ * @LastEditTime: 2021-11-27 14:50:19
  * @LastEditors: yuguangzhou
  * @Description: 提交mutation
  */
@@ -83,4 +83,38 @@ export function clearSongList ({ commit }) {
   commit('setPlayList', [])
   commit('setCurrentIndex', 0)
   commit('setPlayingState', false)
+}
+
+/**
+ * @description 搜索时添加歌曲
+ * @export
+ * @param {*} { commit, state }
+ * @param {*} song
+ */
+export function addSong ({ commit, state }, song) {
+  // slice深拷贝
+  const playList = state.playList.slice()
+  const sequenceList = state.sequenceList.slice()
+  let currentIndex = state.currentIndex
+
+  // 判断点击的歌曲是不是已经在播放列表里
+  const playIndex = findIndex(playList, song)
+  if (playIndex > -1) {
+    currentIndex = playIndex
+  } else {
+    // 添加到最后，索引变为最后一个
+    playList.push(song)
+    currentIndex = playList.length - 1
+  }
+  const sequenceIndex = findIndex(sequenceList, song)
+  if (sequenceIndex === -1) {
+    //  歌曲不在歌曲列表里
+    sequenceList.push(song)
+  }
+
+  commit('setSequenceList', sequenceList)
+  commit('setPlayList', playList)
+  commit('setCurrentIndex', currentIndex)
+  commit('setPlayingState', true)
+  commit('setFullScreen', true)
 }

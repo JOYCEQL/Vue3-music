@@ -128,6 +128,9 @@ export default {
     const selectSong = (song) => {
       emit('select-song', song)
     }
+    const selectSinger = (singer) => {
+      emit('select-singer', singer)
+    }
 
     return {
       singer,
@@ -140,6 +143,7 @@ export default {
       rootRef,
       pullUpLoading,
 
+      selectSinger,
       selectSong
     }
   }

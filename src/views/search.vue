@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-20 11:57:46
- * @LastEditTime: 2021-11-25 21:26:17
+ * @LastEditTime: 2021-11-27 15:01:23
  * @LastEditors: yuguangzhou
  * @Description:搜索
 -->
@@ -31,17 +31,25 @@
           </div>
         </div>
       </scroll>
-             <div class="search-result" v-show="query">
-            <suggest
-              :query="query"
-              @select-song="selectSong"
-            ></suggest>
-          </div>
+      <div class="search-result" v-show="query">
+          <suggest
+            :query="query"
+            @select-song="selectSong"
+            @select-singer="selectSinger"
+          ></suggest>
+      </div>
+      <router-view v-slot="{ Component }">
+        <transition appear name="slide">
+          <component :is="Component" :data="selectedSinger" />
+        </transition>
+      </router-view>
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { getHotKeys } from '@/api/search'
 
 import Scroll from '@/components/wrap-scroll/index'
@@ -57,8 +65,12 @@ export default {
     Suggest
   },
   setup () {
+    const store = useStore()
+    const router = useRouter()
     const query = ref('')
     const hotKeys = ref([])
+    const selectedSinger = ref(null)
+
     onMounted(async () => {
       const res = await getHotKeys()
       hotKeys.value = res.hotKeys
@@ -68,13 +80,23 @@ export default {
       query.value = val
     }
     const selectSong = (song) => {
-      console.log(song)
+      store.dispatch('addSong', song)
+    }
+    const selectSinger = (singer) => {
+      console.log(singer)
+      selectedSinger.value = singer
+      router.push(
+        `/search/${singer.mid}`
+      )
     }
     return {
       query,
       hotKeys,
       addKey,
-      selectSong
+      selectSong,
+      selectSinger,
+      selectedSinger
+
     }
   }
 }

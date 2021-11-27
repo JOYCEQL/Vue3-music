@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-06-09 21:35:41
- * @LastEditTime: 2021-11-16 21:08:58
+ * @LastEditTime: 2021-11-27 14:54:54
  * @LastEditors: yuguangzhou
  * @Description: 路由文件
  */
@@ -59,7 +59,16 @@ const routes = [
   },
   {
     path: '/search',
-    component: Search
+    component: Search,
+    children: [
+      {
+        path: ':id',
+        component: SingerDetail,
+        meta: {
+          showFoot: false
+        }
+      }
+    ]
   }
 ]
 

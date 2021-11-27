@@ -1,13 +1,13 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-06-10 21:37:44
- * @LastEditTime: 2021-09-14 11:09:01
+ * @LastEditTime: 2021-11-27 15:08:33
  * @LastEditors: yuguangzhou
  * @Description: webpack配置
  */
 const registerRouter = require('./backend/router')
 module.exports = {
-  publicPath: './',
+  publicPath: process.env.NODE_ENV === 'production' ? '/music/' : './',
   css: {
     loaderOptions: {
       sass: {
@@ -22,5 +22,6 @@ module.exports = {
     before (app) {
       registerRouter(app)
     }
-  }
+  },
+  productionSourceMap: false
 }
