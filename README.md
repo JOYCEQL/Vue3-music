@@ -1,8 +1,8 @@
-# Vue3-music
+## Vue3-music
 
 一个使用Vue3.0+webpack构建的音乐H5
 
-# 界面效果
+## 界面效果
 
 <table>
     <tr>
@@ -26,10 +26,10 @@
   </tr>
 </table>
 
-# 启动
+## 启动
 
 npm run serve / yarn serve
 
-# 打包
+## 打包
 
 npm run build / yarn build
