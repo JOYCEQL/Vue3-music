@@ -1,11 +1,11 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-08-12 17:09:49
- * @LastEditTime: 2021-09-12 16:28:01
+ * @LastEditTime: 2022-01-06 15:15:08
  * @LastEditors: yuguangzhou
  * @Description:
  */
-import { Play, PauseOne, LeftC, GoStart, GoEnd, Like, CollectionRecords, ShuffleOne, PlayOnce, PlayCycle, MusicList } from '@icon-park/vue-next'
+import { Play, PauseOne, LeftC, GoStart, GoEnd, Like, CollectionRecords, ShuffleOne, PlayOnce, PlayCycle, MusicList, Moon, Sun } from '@icon-park/vue-next'
 export function IconPark (app) {
   app.component('Play', Play)
   app.component('PauseOne', PauseOne)
@@ -18,4 +18,6 @@ export function IconPark (app) {
   app.component('PlayOnce', PlayOnce)
   app.component('PlayCycle', PlayCycle)
   app.component('MusicList', MusicList)
+  app.component('Moon', Moon)
+  app.component('Sun', Sun)
 }

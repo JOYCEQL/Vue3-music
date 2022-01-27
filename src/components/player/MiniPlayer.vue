@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-09-12 09:36:16
- * @LastEditTime: 2021-09-21 09:47:44
+ * @LastEditTime: 2022-01-07 11:12:30
  * @LastEditors: yuguangzhou
  * @Description:迷你播放器
 -->
@@ -136,7 +136,7 @@ export default {
     z-index: 180;
     width: 100%;
     height: 60px;
-    background: $color-highlight-background;
+    background: var(--site-config-color-background);
     .cd-wrapper {
       flex: 0 0 40px;
       width: 40px;
@@ -176,12 +176,12 @@ export default {
             margin-bottom: 2px;
             @include no-wrap();
             font-size: $font-size-medium;
-            color: $color-text;
+            color: var(--site-config-color-text);
           }
           .desc {
             @include no-wrap();
             font-size: $font-size-small;
-            color: $color-text-d;
+            color: var(--site-config-color-text-d);
           }
         }
       }

@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-07-19 20:04:42
- * @LastEditTime: 2021-11-20 13:26:05
+ * @LastEditTime: 2022-01-06 14:39:40
  * @LastEditors: yuguangzhou
  * @Description: 音乐列表
 -->
@@ -208,7 +208,7 @@ export default {
       text-align: center;
       line-height: 40px;
       font-size: $font-size-large;
-      color: $color-text-ll;
+      color: var(--site-config-color-text-ll);
     }
     .bg-image {
       position: relative;
@@ -260,7 +260,7 @@ export default {
       z-index: 0;
       .song-list-wrapper {
         padding: 20px 30px;
-        background: $color-background;
+        background: var(--site-config-color-background);
       }
     }
   }

@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-20 11:57:46
- * @LastEditTime: 2021-11-27 15:01:23
+ * @LastEditTime: 2022-01-06 15:01:03
  * @LastEditors: yuguangzhou
  * @Description:搜索
 -->
@@ -121,16 +121,16 @@ export default {
         .title {
           margin-bottom: 20px;
           font-size: $font-size-medium;
-          color: $color-text-l;
+          color: var(--site-config-color-text-l);
         }
         .item {
           display: inline-block;
           padding: 5px 10px;
           margin: 0 20px 10px 0;
           border-radius: 6px;
-          background: $color-highlight-background;
+          background: var(--site-config-color-highlight-background);
           font-size: $font-size-medium;
-          color: $color-text-d;
+          color: var(--site-config-color-text-d);
         }
       }
       .search-history {
@@ -141,7 +141,7 @@ export default {
           align-items: center;
           height: 40px;
           font-size: $font-size-medium;
-          color: $color-text-l;
+          color: var(--site-config-color-text-l);
           .text {
             flex: 1;
           }
@@ -149,7 +149,7 @@ export default {
             @include extend-click();
             .icon-clear {
               font-size: $font-size-medium;
-              color: $color-text-d;
+              color: var(--site-config-color-text-d);
             }
           }
         }

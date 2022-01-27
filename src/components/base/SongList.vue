@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-07-19 20:05:23
- * @LastEditTime: 2021-11-20 14:03:42
+ * @LastEditTime: 2022-01-06 14:40:48
  * @LastEditors: yuguangzhou
  * @Description:歌曲列表
 -->
@@ -113,12 +113,12 @@ export default {
         overflow: hidden;
         .name {
           @include no-wrap();
-          color: $color-text
+          color: var(--site-config-color-text)
         }
         .desc {
           @include no-wrap();
           margin-top: 4px;
-          color: $color-text-d;
+          color: var(--site-config-color-text-d);
         }
       }
     }

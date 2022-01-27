@@ -3,8 +3,8 @@ body, html {
   font-family: 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', arial, sans-serif, 'Droid Sans Fallback';
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  background: $color-background;
-  color: $color-text;
+  background: var(--site-config-color-background)  ;
+  color: var(--site-config-color-text);
 }
 
 .g-relative {
@@ -35,4 +35,9 @@ body, html {
   100% {
     transform: rotate(360deg)
   }
+}
+
+// 切换主题过渡小效果
+* {
+  transition: background-color .25s, box-shadow .25s, opacity 10s;
 }

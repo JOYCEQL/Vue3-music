@@ -1,31 +1,38 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-16 21:37:32
- * @LastEditTime: 2021-09-21 15:06:26
+ * @LastEditTime: 2022-01-06 15:17:32
  * @LastEditors: yuguangzhou
  * @Description: 公共头部
 -->
 <template>
    <div class="header">
+     <div class="theme">
+      <sun theme="filled" size="30" fill="#3a5de7" v-if="currentThemes==='themes'" @click="toggleTheme('darkThemes')"/>
+        <moon v-else theme="filled" size="30" fill="#3a5de7"  @click="toggleTheme('themes')"/>
+     </div>
     <span class="icon"></span>
-    <!-- <h1 class="text">山水之间</h1> -->
-    <!-- <router-link class="mine" to="/user">
-      <i class="icon-mine"></i>
-    </router-link> -->
   </div>
 </template>
 
 <script>
-import { reactive } from 'vue'
+import config from '@/config'
+import { setThemes } from '@/utils/set-theme'
 export default {
   name: 'Header',
   components: {},
-  setup () {
-    const data = reactive({
-
-    })
+  data () {
     return {
-      data
+      currentThemes: ''
+    }
+  },
+  created () {
+    console.log(config)
+  },
+  methods: {
+    toggleTheme (currentTheme) {
+      this.currentThemes = currentTheme
+      setThemes(config, currentTheme)
     }
   }
 }
@@ -34,16 +41,19 @@ export default {
 <style lang="scss" scoped>
   .header {
     height: 44px;
-    text-align: center;
     color: $color-theme;
     font-size: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    .theme{
+      margin-left: 10px;
+      margin-right: 32vw;
+    }
     .icon {
       display: inline-block;
-      vertical-align: top;
-      margin-top: 6px;
       width: 48px;
       height: 33px;
-      margin-right: 9px;
       @include bg-image('logo');
       background-size: 100%;
     }

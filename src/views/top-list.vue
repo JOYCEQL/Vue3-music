@@ -100,8 +100,8 @@ export default {
           padding: 0 20px;
           height: 100px;
           overflow: hidden;
-          background: $color-highlight-background;
-          color: $color-text-d;
+          background:var(--site-config-color-highlight-background);
+          color: var(--site-config-color-text-d);
           font-size: $font-size-small;
           .song {
             @include no-wrap();

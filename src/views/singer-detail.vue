@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-07-05 20:41:32
- * @LastEditTime: 2021-11-16 20:35:34
+ * @LastEditTime: 2022-01-07 09:46:59
  * @LastEditors: yuguangzhou
  * @Description:歌手详情
 -->
@@ -28,6 +28,6 @@ export default createDetailComponent('SingerDetail', SINGER_KEY, getSingerDetail
   left: 0;
   bottom: 0;
   right: 0;
-  background: $color-background;
+  background: var(--site-config-color-background);
 }
 </style>

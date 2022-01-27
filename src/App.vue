@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-09 21:35:41
- * @LastEditTime: 2021-11-20 13:05:23
+ * @LastEditTime: 2022-01-06 15:29:59
  * @LastEditors: yuguangzhou
  * @Description:
 -->
@@ -20,8 +20,9 @@ import Header from '@/components/header/Header'
 // import Tab from '@/components/tab/Tab'
 import Player from '@/components/player/Player'
 import TabBar from '@/components/base/TabBar'
-
 import { mapState } from 'vuex'
+import config from '@/config'
+import { setThemes } from '@/utils/set-theme'
 export default {
   components: {
     Header,
@@ -41,11 +42,23 @@ export default {
       'playList'
     ])
   },
+  data () {
+    return {
+      currentThemes: 'darkThemes'
+    }
+  },
   created () {
+    setThemes(config, this.currentThemes)
+  },
+  watch: {
+    $route (to, from) {
+      console.log(to.path)
+    }
   }
 
 }
 </script>
 
 <style lang="scss" scoped>
+
 </style>

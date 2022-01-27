@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-08-12 10:52:26
- * @LastEditTime: 2021-09-21 14:48:37
+ * @LastEditTime: 2022-01-07 11:15:36
  * @LastEditors: yuguangzhou
  * @Description:播放器组件
 -->
@@ -406,7 +406,7 @@ export default {
       top: 0;
       bottom: 0;
       z-index: 150;
-      background: $color-background;
+      background: var(--site-config-color-background);
       .background {
         position: absolute;
         left: 0;

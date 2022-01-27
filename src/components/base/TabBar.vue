@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-08-13 14:44:55
- * @LastEditTime: 2021-08-13 15:22:57
+ * @LastEditTime: 2022-01-06 14:12:22
  * @LastEditors: yuguangzhou
  * @Description: 底部标签栏
 -->
@@ -40,7 +40,7 @@ export default {
 
 <style scoped lang="scss">
 .van-tabbar{
-  background-color: $color-background;
+  background: var(--site-config-color-background)  ;
   .van-tabbar-item--active{
     background:transparent;
   }

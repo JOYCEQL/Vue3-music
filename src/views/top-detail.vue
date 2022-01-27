@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-09-06 15:55:11
- * @LastEditTime: 2021-11-20 13:26:22
+ * @LastEditTime: 2022-01-06 14:36:16
  * @LastEditors: yuguangzhou
  * @Description: 排行榜详情
 -->
@@ -33,6 +33,6 @@ export default createDetailComponent('TopDetail', TOP_KEY, getTopDetail)
     left: 0;
     bottom: 0;
     right: 0;
-    background: $color-background;
+    background: var(--site-config-color-background);
   }
 </style>

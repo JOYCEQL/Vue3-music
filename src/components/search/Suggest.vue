@@ -165,13 +165,13 @@ export default {
           width: 30px;
           [class^="icon-"] {
             font-size: 14px;
-            color: $color-text-d;
+            color: var(--site-config-color-text-d);
           }
         }
         .name {
           flex: 1;
           font-size: $font-size-medium;
-          color: $color-text-d;
+          color: var(--site-config-color-text-d);
           overflow: hidden;
           .text {
             @include no-wrap();

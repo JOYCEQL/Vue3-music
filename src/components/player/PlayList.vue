@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-09-21 09:41:55
- * @LastEditTime: 2021-10-31 11:38:07
+ * @LastEditTime: 2022-01-07 11:12:48
  * @LastEditors: yuguangzhou
  * @Description:
 -->
@@ -227,7 +227,7 @@ export default {
     top: 0;
     bottom: 0;
     z-index: 200;
-    background-color: $color-background-d;
+    background-color: var(--site-config-color-background-d);
     &.list-fade-enter-active, &.list-fade-leave-active {
       transition: opacity .3s;
       .list-wrapper {
@@ -247,7 +247,7 @@ export default {
       bottom: 0;
       z-index: 210;
       width: 100%;
-      background-color: $color-highlight-background;
+      background-color: var(--site-config-color-highlight-background);
       .list-header {
         position: relative;
         padding: 20px 30px 10px 20px;
@@ -262,13 +262,13 @@ export default {
           .text {
             flex: 1;
             font-size: $font-size-medium;
-            color: $color-text-l;
+            color: var(--site-config-color-text-l);
           }
           .clear {
             @include extend-click();
             .icon-clear {
               font-size: $font-size-medium;
-              color: $color-text-d;
+            color: var(--site-config-color-text-d);
             }
           }
         }
@@ -286,13 +286,13 @@ export default {
             flex: 0 0 20px;
             width: 20px;
             font-size: $font-size-small;
-            color: $color-theme-d;
+            color: var(--site-config-color-text-d);
           }
           .text {
             flex: 1;
             @include no-wrap();
             font-size: $font-size-medium;
-            color: $color-text-d;
+            color: var(--site-config-color-text-d);
           }
           .favorite {
             @include extend-click();
@@ -320,9 +320,9 @@ export default {
           display: flex;
           align-items: center;
           padding: 8px 16px;
-          border: 1px solid $color-text-l;
+          border: 1px solid var(--site-config-color-text-l);
           border-radius: 100px;
-          color: $color-text-l;
+          color: var(--site-config-color-text-l);
           .icon-add {
             margin-right: 5px;
             font-size: $font-size-small-s;
@@ -335,9 +335,9 @@ export default {
       .list-footer {
         text-align: center;
         line-height: 50px;
-        background: $color-background;
+        background-color: var(--site-config-color-background);
         font-size: $font-size-medium-x;
-        color: $color-text-l;
+        color: var(--site-config-color-text-l);
       }
     }
   }

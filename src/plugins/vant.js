@@ -1,7 +1,7 @@
 /*
  * @Author: yuguangzhou
  * @Date: 2021-06-20 14:54:19
- * @LastEditTime: 2021-08-13 14:46:48
+ * @LastEditTime: 2022-01-05 14:14:08
  * @LastEditors: yuguangzhou
  * @Description: vant 插件引入
  */

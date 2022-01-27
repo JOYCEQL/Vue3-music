@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-06-20 11:57:07
- * @LastEditTime: 2021-11-16 22:23:24
+ * @LastEditTime: 2022-01-06 14:18:13
  * @LastEditors: yuguangzhou
  * @Description:推荐
 -->
@@ -118,7 +118,7 @@ export default {
     line-height: 65px;
     text-align: center;
     font-size: $font-size-medium;
-    color: $color-theme;
+    color: var(--site-config-color-theme);
   }
   .item {
     display: flex;
@@ -145,10 +145,10 @@ export default {
     }
     .name {
       margin-bottom: 10px;
-      color: $color-text;
+      color: var(--site-config-color-text);
     }
     .title {
-      color: $color-text-d;
+      color: var(--site-config-color-text-d);
     }
   }
 }

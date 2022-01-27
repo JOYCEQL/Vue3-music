@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-07-03 11:14:56
- * @LastEditTime: 2021-11-14 20:05:56
+ * @LastEditTime: 2022-01-06 14:28:26
  * @LastEditors: yuguangzhou
  * @Description: 索引列表
 -->
@@ -96,7 +96,7 @@ export default {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: $color-background;
+    background: var(--site-config-color-background);
     .group {
       padding-bottom: 30px;
       .title {
@@ -104,8 +104,8 @@ export default {
         line-height: 30px;
         padding-left: 20px;
         font-size: $font-size-small;
-        color: $color-text-l;
-        background: $color-highlight-background;
+        color: var(--site-config-color-text-l);
+        background: var(--site-config-color-highlight-background);
       }
       .item {
         display: flex;
@@ -118,7 +118,7 @@ export default {
         }
         .name {
           margin-left: 20px;
-          color: $color-text-l;
+          color: var(--site-config-color-text-l);
           font-size: $font-size-medium;
         }
       }
@@ -133,8 +133,8 @@ export default {
         line-height: 30px;
         padding-left: 20px;
         font-size: $font-size-small;
-        color: $color-text-l;
-        background: $color-highlight-background;
+        color: var(--site-config-color-text-l);
+        background: var(--site-config-color-highlight-background);
       }
     }
     .shortcut {
@@ -146,15 +146,15 @@ export default {
       padding: 20px 0;
       border-radius: 10px;
       text-align: center;
-      background: $color-background-d;
+      background: var(--site-config-color-background);
       font-family: Helvetica;
       .item {
         padding: 3px;
         line-height: 1;
-        color: $color-text-l;
+        color: var(--site-config-color-text-l);
         font-size: $font-size-small;
         &.current {
-          color: $color-theme
+          color: var(--site-config-color-theme)
         }
       }
     }

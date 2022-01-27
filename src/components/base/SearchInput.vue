@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-11-24 20:04:25
- * @LastEditTime: 2021-11-24 20:49:08
+ * @LastEditTime: 2022-01-06 14:57:56
  * @LastEditors: yuguangzhou
  * @Description:
 -->
@@ -63,27 +63,27 @@ export default {
     width: 100%;
     padding: 0 6px;
     height: 32px;
-    background: $color-highlight-background;
+    background: var(--site-config-color-highlight-background);
     border-radius: 6px;
     .icon-search {
       font-size: 24px;
-      color: $color-text-d;
+      color: var(--site-config-color-text-d);
     }
     .input-inner {
       flex: 1;
       margin: 0 5px;
       line-height: 18px;
-      background: $color-highlight-background;
-      color: $color-text;
+      background: var(--site-config-color-highlight-background);
+      color: var(--site-config-color-text);
       font-size: $font-size-medium;
       outline: 0;
       &::placeholder {
-        color: $color-text-d;
+        color: var(--site-config-color-text-d);
       }
     }
     .icon-dismiss {
       font-size: 16px;
-      color: $color-text-d;
+      color: var(--site-config-color-text-d);
     }
   }
 </style>

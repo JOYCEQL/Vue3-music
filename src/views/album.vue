@@ -1,7 +1,7 @@
 <!--
  * @Author: yuguangzhou
  * @Date: 2021-11-16 20:53:30
- * @LastEditTime: 2021-11-16 22:15:59
+ * @LastEditTime: 2022-01-06 15:38:52
  * @LastEditors: yuguangzhou
  * @Description:
 -->
@@ -32,6 +32,6 @@ export default createDetailComponent('Album', ALBUM_KEY, getAlbum)
     left: 0;
     bottom: 0;
     right: 0;
-    background: $color-background;
+    background: var(--site-config-color-background);
   }
 </style>
