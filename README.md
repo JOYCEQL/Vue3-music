@@ -1,6 +1,6 @@
 ## Vue3-music
 
-一个使用Vue3.0+webpack构建的音乐H5
+一个使用Vue3.0+webpack构建的音乐webapp
 
 ## 界面效果
 
